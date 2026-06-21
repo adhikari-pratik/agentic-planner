@@ -1,0 +1,23 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.ty/
+.env
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# AI development artifacts — not for reviewers
+claude_code_prompt.md
+
+# Assignment PDF belongs to the hiring company
+Assignment AI interview.pdf
+
+# Internal development artifacts
+docs/interview_demo.md
+docs/design.md
+scripts/

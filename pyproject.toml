@@ -1,0 +1,48 @@
+[project]
+name = "resource-constrained-agent"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "pratik", email = "pratik8.adhikari2016@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "beautifulsoup4>=4.15.0",
+    "ddgs>=9.14.4",
+    "httpx>=0.28.1",
+    "ollama>=0.6.2",
+    "openai>=2.43.0",
+    "pydantic>=2.13.4",
+    "pydantic-settings>=2.14.2",
+    "python-dotenv>=1.2.2",
+    "rich>=15.0.0",
+    "tenacity>=9.1.4",
+]
+
+[project.scripts]
+agentic-planner = "resource_constrained_agent.cli:main"
+resource-constrained-agent = "resource_constrained_agent.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.8.17,<0.9.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.15.18",
+    "ty>=0.0.51",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
