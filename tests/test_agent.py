@@ -698,7 +698,7 @@ def test_mixed_research_and_compute_task_does_not_use_code_only_prompt() -> None
     )
     code = json.dumps(
         {
-            "thought": "Compute remaining calls.",
+            "thought": "Compute the requested difference.",
             "progress_assessment": "Source is verified.",
             "is_stuck": False,
             "new_plan": None,
@@ -716,7 +716,7 @@ def test_mixed_research_and_compute_task_does_not_use_code_only_prompt() -> None
             "new_plan": None,
             "action": {
                 "kind": "final_answer",
-                "final_answer": "Argparse source verified; 6 calls remain.",
+                "final_answer": "Argparse source verified; computed result is 6.",
             },
         }
     )
@@ -727,11 +727,9 @@ def test_mixed_research_and_compute_task_does_not_use_code_only_prompt() -> None
         max_steps=4,
     )
 
-    result = agent.run(
-        "Research Python argparse, recover from a bad source URL, then compute remaining calls."
-    )
+    result = agent.run("Find a source about Python argparse, then compute 10 - 4.")
 
-    assert result.answer == "Argparse source verified; 6 calls remain."
+    assert result.answer == "Argparse source verified; computed result is 6."
     tool_names = [
         step.action.tool_call.tool_name for step in result.steps[:3] if step.action.tool_call
     ]
@@ -775,7 +773,7 @@ def test_mixed_research_and_compute_task_does_not_auto_finalize_with_stdout_only
     )
     code = json.dumps(
         {
-            "thought": "Compute remaining calls.",
+            "thought": "Compute the requested difference.",
             "progress_assessment": "Source is verified.",
             "is_stuck": False,
             "new_plan": None,
@@ -785,7 +783,7 @@ def test_mixed_research_and_compute_task_does_not_auto_finalize_with_stdout_only
             },
         }
     )
-    final_answer = "The argparse source was verified, and 6 LLM calls remain."
+    final_answer = "The argparse source was verified, and the computed result is 6."
     final_step = json.dumps(
         {
             "thought": "Answer both requirements.",
@@ -802,7 +800,7 @@ def test_mixed_research_and_compute_task_does_not_auto_finalize_with_stdout_only
         max_steps=4,
     )
 
-    result = agent.run("Find a source about Python argparse, then compute 10 - 4 remaining calls.")
+    result = agent.run("Find a source about Python argparse, then compute 10 - 4.")
 
     assert result.answer == final_answer
     assert len(result.steps) == 4

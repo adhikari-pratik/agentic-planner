@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: resource-constrained-agent
+    runtime: docker
+    dockerCommand: agentic-planner-web
+    healthCheckPath: /health
+    envVars:
+      - key: AGENT_LLM_PROVIDER
+        value: openai
+      - key: WEB_SEARCH_PROVIDER
+        value: tavily
+      - key: MAX_LLM_CALLS
+        value: 10
+      - key: MAX_TASK_COST_USD
+        value: 0.20
+      - key: LLM_MAX_COMPLETION_TOKENS
+        value: 400
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: TAVILY_API_KEY
+        sync: false

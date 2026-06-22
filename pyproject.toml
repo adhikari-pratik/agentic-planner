@@ -10,6 +10,7 @@ requires-python = ">=3.12"
 dependencies = [
     "beautifulsoup4>=4.15.0",
     "ddgs>=9.14.4",
+    "fastapi>=0.124.0",
     "httpx>=0.28.1",
     "ollama>=0.6.2",
     "openai>=2.43.0",
@@ -18,10 +19,12 @@ dependencies = [
     "python-dotenv>=1.2.2",
     "rich>=15.0.0",
     "tenacity>=9.1.4",
+    "uvicorn>=0.38.0",
 ]
 
 [project.scripts]
 agentic-planner = "resource_constrained_agent.cli:main"
+agentic-planner-web = "resource_constrained_agent.web:main"
 resource-constrained-agent = "resource_constrained_agent.cli:main"
 
 [build-system]

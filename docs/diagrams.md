@@ -6,7 +6,9 @@ These diagrams are the presentation-friendly version of the system design. They 
 
 ```mermaid
 flowchart TD
-    CLI[CLI / Test Harness] --> Agent[ReActAgent]
+    CLI[CLI] --> Agent[ReActAgent]
+    Web[FastAPI Browser Demo] --> Agent
+    Harness[Test Harness] --> Agent
 
     Agent --> Budget[BudgetEnforcer]
     Agent --> Provider[LLMProvider]

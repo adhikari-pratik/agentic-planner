@@ -73,6 +73,13 @@ class HarnessToolRegistry(ToolRegistry):
                 summary="Invalid evidence_fetcher input.",
                 data={"url": url},
             )
+        if "argparse-broken" in url:
+            return ToolObservation(
+                tool_name=ToolName.EVIDENCE_FETCHER,
+                ok=False,
+                summary="Fetch failed for first candidate source.",
+                data={"url": url, "status_code": 404},
+            )
         return ToolObservation(
             tool_name=ToolName.EVIDENCE_FETCHER,
             ok=True,
@@ -139,34 +146,35 @@ def scripted_tasks() -> list[tuple[str, list[str], float]]:
         ),
         (
             (
-                "First try to fetch this bad source URL: not-a-url. If it fails, "
-                "search for the official Python argparse documentation, fetch a working "
-                "source, and summarize what argparse is used for in one sentence."
+                "Find an official Python source explaining argparse. If the first source "
+                "cannot be fetched, recover by finding another official source and summarize "
+                "what argparse is used for in one sentence."
             ),
             [
                 step(
-                    "The task explicitly asks me to try the bad URL first.",
+                    "I need candidate official sources first.",
                     "No source has been checked yet.",
-                    tool("evidence_fetcher", {"url": "not-a-url"}),
-                ),
-                step(
-                    "The provided URL failed, so I need to search for a valid official source.",
-                    "The bad source URL failed; pivot to web discovery.",
                     tool(
                         "web_search",
                         {"query": "Python argparse official docs", "max_results": 2},
                     ),
-                    new_plan=(
-                        "Search for the official Python documentation after the bad URL fails."
+                ),
+                step(
+                    "Try the first candidate source.",
+                    "Search found candidate URLs; verify the first candidate.",
+                    tool(
+                        "evidence_fetcher",
+                        {"url": "https://docs.python.org/3/library/argparse-broken.html"},
                     ),
                 ),
                 step(
-                    "The search result should be verified from the actual page.",
-                    "Search found candidate URLs; fetch the official docs next.",
+                    "The first candidate failed, so I should recover with another official URL.",
+                    "The first source fetch failed; pivot to another official Python docs page.",
                     tool(
                         "evidence_fetcher",
                         {"url": "https://docs.python.org/3/library/argparse.html"},
                     ),
+                    new_plan="Fetch a second official Python documentation source.",
                 ),
                 step(
                     "The fetched official source is enough for a concise answer.",

@@ -1,7 +1,7 @@
 # Resource-Constrained Agentic Planning Loop
 
 ## Architecture Overview
-This project implements a hand-rolled ReAct agent with hard resource limits. A `BudgetEnforcer` gates every LLM call, an `LLMProvider` abstraction supports Ollama and OpenAI, Pydantic v2 schemas validate every model step, and a timeout-protected tool registry exposes exactly three tools: web search, code execution, and evidence fetching.
+This project implements a hand-rolled ReAct agent with hard resource limits. A CLI, deterministic harness, and optional FastAPI browser demo all call the same `ReActAgent`. A `BudgetEnforcer` gates every LLM call, an `LLMProvider` abstraction supports Ollama and OpenAI, Pydantic v2 schemas validate every model step, and a timeout-protected tool registry exposes exactly three tools: web search, code execution, and evidence fetching.
 
 Architecture and flow diagrams are in `docs/diagrams.md`.
 
@@ -69,6 +69,16 @@ Build and run the deterministic assignment harness:
 docker build -t resource-constrained-agent .
 docker run --rm resource-constrained-agent
 ```
+
+Run the browser demo locally:
+
+```bash
+docker run --rm -p 8000:8000 --env-file .env resource-constrained-agent agentic-planner-web
+```
+
+Then open `http://localhost:8000`. This is the local demo URL. If deployed to a container host
+such as Render, Fly.io, Railway, or Azure Container Apps, use the hosted HTTPS URL in the
+submission form.
 
 For live OpenAI, Tavily, or Ollama runs, pass your environment file:
 

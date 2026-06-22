@@ -8,7 +8,7 @@ from pathlib import Path
 
 from rich.console import Console
 
-from resource_constrained_agent.agent import ReActAgent
+from resource_constrained_agent.agent import ProgressCallback, ReActAgent
 from resource_constrained_agent.budget import BudgetEnforcer
 from resource_constrained_agent.harness import run_harness
 from resource_constrained_agent.providers import OllamaProvider, OpenAIProvider, ScriptedProvider
@@ -77,7 +77,9 @@ def execute_task(
     settings: Settings,
     max_steps: int | None = None,
     verbose: bool = False,
+    on_progress: ProgressCallback | None = None,
 ) -> AgentResult:
+    progress_callback = on_progress or (render_progress if verbose else None)
     agent = ReActAgent(
         provider=build_provider(settings),
         budget=BudgetEnforcer(
@@ -90,7 +92,7 @@ def execute_task(
             tavily_api_key=settings.tavily_api_key,
         ),
         max_steps=max_steps or settings.max_agent_steps,
-        on_progress=render_progress if verbose else None,
+        on_progress=progress_callback,
     )
     return agent.run(task)
 
