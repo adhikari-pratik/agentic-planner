@@ -15,6 +15,12 @@ services:
         value: 0.20
       - key: LLM_MAX_COMPLETION_TOKENS
         value: 400
+      - key: LLM_TIMEOUT_SECONDS
+        value: 45
+      - key: OPENAI_INPUT_PRICE_PER_1M_TOKENS
+        value: 0.15
+      - key: OPENAI_OUTPUT_PRICE_PER_1M_TOKENS
+        value: 0.60
       - key: OPENAI_API_KEY
         sync: false
       - key: TAVILY_API_KEY

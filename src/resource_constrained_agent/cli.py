@@ -35,6 +35,8 @@ def build_provider(settings: Settings):
         return OpenAIProvider(
             model=settings.openai_model,
             api_key=settings.openai_api_key,
+            input_price_per_1m_tokens=settings.openai_input_price_per_1m_tokens,
+            output_price_per_1m_tokens=settings.openai_output_price_per_1m_tokens,
             timeout_seconds=settings.llm_timeout_seconds,
             max_completion_tokens=settings.llm_max_completion_tokens,
         )

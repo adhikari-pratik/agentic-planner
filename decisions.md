@@ -2,7 +2,7 @@
 
 - "I considered LangChain but chose a hand-rolled ReAct loop because the assignment evaluates explicit budget enforcement, tool routing, and replanning behavior."
 
-- "I considered LangGraph but chose a small direct loop because graph orchestration would hide the state transitions the reviewer needs to inspect."
+- "I considered LangGraph but chose a small direct loop because LangGraph is designed for multi-agent graphs with branches and parallel nodes; a single sequential ReAct loop does not need graph infrastructure and adding it would mean configuring a framework instead of building the planning logic the assignment asks for."
 
 - "I considered separate reflection LLM calls but chose reflection folded into each step because the task has only 10 LLM calls and every extra reflection call consumes scarce budget."
 

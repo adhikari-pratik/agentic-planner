@@ -1,7 +1,7 @@
 [project]
 name = "resource-constrained-agent"
 version = "0.1.0"
-description = "Add your description here"
+description = "Resource-constrained ReAct agent with hard LLM call and cost budgets, three timeout-protected tools, and structured reflection and replanning."
 readme = "README.md"
 authors = [
     { name = "pratik", email = "pratik8.adhikari2016@gmail.com" }

@@ -37,3 +37,18 @@ def test_openai_provider_requires_key_in_cli_settings() -> None:
 
     with pytest.raises(ValueError, match="OPENAI_API_KEY"):
         build_provider(settings)
+
+
+def test_openai_provider_uses_configured_price_settings() -> None:
+    settings = Settings(
+        agent_llm_provider="openai",
+        openai_api_key="test",
+        openai_input_price_per_1m_tokens=1.25,
+        openai_output_price_per_1m_tokens=2.50,
+    )
+
+    provider = build_provider(settings)
+
+    assert isinstance(provider, OpenAIProvider)
+    assert provider.input_price_per_1m_tokens == 1.25
+    assert provider.output_price_per_1m_tokens == 2.50

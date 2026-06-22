@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     ollama_model: str = "llama3.1:8b"
     openai_api_key: str | None = None
     openai_model: str = "gpt-4o-mini"
+    openai_input_price_per_1m_tokens: float = Field(default=0.15, ge=0)
+    openai_output_price_per_1m_tokens: float = Field(default=0.60, ge=0)
     web_search_provider: str = "ddgs"
     tavily_api_key: str | None = None
     max_llm_calls: int = Field(default=10, ge=1)
